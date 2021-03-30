@@ -52,10 +52,12 @@ const clean = (path, fileName) => {
   })
 }
 
-const compressFile = (path, fileName) => {
+const compressFile = (path) => {
   logger.info('Starting compress bz2');
-  exec(`bzip2 -k ${path}/${fileName}.bsp`, () => {
-    clean(path, fileName);
+  const targetFile = fs.readdirSync(path).find(file => file.match(/\.bsp$/));
+  const targetFileName = targetFile.match(/^(.+)\.bsp$/)[1];
+  exec(`bzip2 -k ${path}/${targetFile}`, () => {
+    clean(path, targetFileName);
   });
   
 }
@@ -73,14 +75,14 @@ const dealFile = (path, fileName, mapName) => {
     exec(`unzip ${path}/${fileName} -d ${path}`, (err) => {
       if(err) logger.error(err);
       logger.info('ZIP uncompressed');
-      compressFile(path, mapName);
+      compressFile(path);
     });
   } else if (ext === 'rar') {
     logger.info('Uncompress RAR');
     exec(`unrar x ${path}/${fileName} ${path}`, (err) => {
       if(err) logger.error(err);
       logger.info('RAR uncompressed');
-      compressFile(path, mapName);
+      compressFile(path);
     });
   }
 }
