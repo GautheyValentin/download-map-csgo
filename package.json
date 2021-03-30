@@ -1,0 +1,24 @@
+{
+  "name": "download-map-csgo",
+  "version": "1.0.0",
+  "description": "Fast download and compresser script",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.5",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Fast",
+    "Downloader",
+    "CSGO",
+    "Map"
+  ],
+  "author": "Valentin GAUTHEY",
+  "license": "MIT"
+}
