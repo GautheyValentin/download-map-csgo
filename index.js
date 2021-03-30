@@ -116,12 +116,13 @@ const downloadWorkshop = () => {
     const mapName = search[0].attribs.title;
     const mapUri = search[0].attribs.href;
 
-    const fileNameSearch = cheer('b')[0].children;
-    const fileNameToParse = fileNameSearch[fileNameSearch.length - 1].data;
-    const fileName = fileNameToParse.match(/([a-zA-Z_0-9]+\.[a-zA-Z0-9]+)/)[1];
-
+    // const fileNameSearch = cheer('b')[0].children;
+    // const fileNameToParse = fileNameSearch[fileNameSearch.length - 1].data;
+    // const fileName = fileNameToParse.match(/([a-zA-Z_0-9]+\.[a-zA-Z0-9]+)/)[1];
+    // Bad filename from the site... Need to use api workshop directly
+    
     preventDuplicata(mapName);
-    download(mapUri, fileName)
+    download(mapUri, `${mapName}.zip`);
   })
 }
 
