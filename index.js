@@ -62,14 +62,14 @@ const compressFile = (path) => {
   
 }
 
-const dealFile = (path, fileName, mapName) => {
+const dealFile = (path, fileName) => {
   logger.info('Deal with file');
   
 
   const search = fileName.match(/\.([a-zA-Z0-9]+)$/);
   const ext = search[1];
   
-  if(ext === 'bsp') compressFile(path, mapName);
+  if(ext === 'bsp') compressFile(path);
   else if (ext === 'zip') {
     logger.info('Uncompress ZIP');
     exec(`unzip ${path}/${fileName} -d ${path}`, (err) => {
@@ -87,7 +87,7 @@ const dealFile = (path, fileName, mapName) => {
   }
 }
 
-const download = (uri, name, mapName) => {
+const download = (uri, name) => {
   logger.info('Create tmp directory');
 
   const workingDir = uuid();
@@ -97,7 +97,7 @@ const download = (uri, name, mapName) => {
 
   return axios({ mathod: 'get', url: uri, responseType: 'stream' }).then(res => {
     res.data.pipe(fs.createWriteStream(`${workingDir}/${name}`));
-    res.data.on('end', () => dealFile(workingDir, name, mapName));
+    res.data.on('end', () => dealFile(workingDir, name));
   })
 }
 
@@ -115,10 +115,13 @@ const downloadWorkshop = () => {
 
     const mapName = search[0].attribs.title;
     const mapUri = search[0].attribs.href;
-    const fileName = `${mapName}.zip`;
+
+    const fileNameSearch = cheer('b')[0].children;
+    const fileNameToParse = fileNameSearch[fileNameSearch.length - 1].data;
+    const fileName = fileNameToParse.match(/([a-zA-Z_0-9]+\.[a-zA-Z0-9]+)/)[1];
 
     preventDuplicata(mapName);
-    download(mapUri, fileName, mapName)
+    download(mapUri, fileName)
   })
 }
 
@@ -136,7 +139,7 @@ const downloadGamebanana = () => {
     const mapName = fileName.match(/^([a-zA-Z_0-9]+)\.[a-zA-Z0-9]+$/)[1];
     
     preventDuplicata(mapName);
-    download(mapUri, fileName, mapName);
+    download(mapUri, fileName);
   })
 }
 
