@@ -113,7 +113,7 @@ const downloadWorkshop = () => {
 
     const mapName = search[0].attribs.title;
     const mapUri = search[0].attribs.href;
-    const fileName = `${mapName}.bsp`;
+    const fileName = `${mapName}.zip`;
 
     preventDuplicata(mapName);
     download(mapUri, fileName, mapName)
