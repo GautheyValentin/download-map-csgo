@@ -134,7 +134,8 @@ const downloadGamebanana = () => {
     const cheer = cheerio.load(res.data);
 
     const search = cheer('code');
-
+    console.log(search);
+    return;
     const fileName = search[0].children[0].data;
     const mapUri = `${downloader['gamebanana']}${fileName}`;
     const mapName = fileName.match(/^([a-zA-Z_0-9]+)\.[a-zA-Z0-9]+$/)[1];
@@ -153,7 +154,7 @@ const init = () => {
   }
 
   if(uri.match(/steamcommunity\.com\/sharedfiles\/filedetails\/\?id=[0-9]+/)) return downloadWorkshop();
-  else if(uri.match(/gamebanana\.com\/maps\/[0-9]+/)) return downloadGamebanana();
+  else if(uri.match(/gamebanana\.com\/maps\/download\/[0-9]+/)) return downloadGamebanana();
 }
 
 
